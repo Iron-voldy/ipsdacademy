@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Gallery = () => {
+  const [imageErrors, setImageErrors] = useState({});
+
+  // Handle image loading errors gracefully
+  const handleImageError = (imgSrc) => {
+    setImageErrors(prev => ({ ...prev, [imgSrc]: true }));
+  };
+
+  // Component to render image with error handling
+  const SafeImage = ({ src, alt, className }) => {
+    if (imageErrors[src]) {
+      return (
+        <div className={`${className} bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center`}>
+          <span className="text-gray-500 text-xs">📷</span>
+        </div>
+      );
+    }
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        onError={() => handleImageError(src)}
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen">
       <section className="section-padding">
@@ -27,14 +53,14 @@ const Gallery = () => {
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
               <div className="grid grid-cols-4 gap-2 w-full mb-3">
-                <img src="/assets/kprindi2025/img1.jpg" alt="KPR Institute 1" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img2.jpg" alt="KPR Institute 2" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img3.jpg" alt="KPR Institute 3" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img4.jpg" alt="KPR Institute 4" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img5.jpg" alt="KPR Institute 5" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img6.jpg" alt="KPR Institute 6" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img7.jpg" alt="KPR Institute 7" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/kprindi2025/img8.jpg" alt="KPR Institute 8" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img1.jpg`} alt="KPR Institute 1" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img2.jpg`} alt="KPR Institute 2" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img3.jpg`} alt="KPR Institute 3" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img4.jpg`} alt="KPR Institute 4" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img5.jpg`} alt="KPR Institute 5" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img6.jpg`} alt="KPR Institute 6" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img7.jpg`} alt="KPR Institute 7" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/kprindi2025/img8.jpg`} alt="KPR Institute 8" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
               </div>
               <div className="text-4xl mb-2">📸</div>
               <h3 className="text-lg font-bold text-primary-700 mb-1 text-center">Visiting the KRP Institute of Engineering and Technology</h3>
@@ -52,9 +78,9 @@ const Gallery = () => {
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
               <div className="grid grid-cols-3 gap-2 w-full mb-3">
-                <img src="/assets/subpdi teach tr/img1.jpg" alt="Teacher Training 1" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
-                <img src="/assets/subpdi teach tr/img2.jpg" alt="Teacher Training 2" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
-                <img src="/assets/subpdi teach tr/img3.jpg" alt="Teacher Training 3" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/subpdi teach tr/img1.jpg`} alt="Teacher Training 1" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/subpdi teach tr/img2.jpg`} alt="Teacher Training 2" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/subpdi teach tr/img3.jpg`} alt="Teacher Training 3" className="object-cover rounded-lg border border-primary-200 shadow h-24 w-full" />
               </div>
               <div className="text-4xl mb-2">📸</div>
               <h3 className="text-lg font-bold text-primary-700 mb-1 text-center">Teacher Training Programme at Subodhi Maha Vidyalaya Anuradhapura</h3>
@@ -72,8 +98,8 @@ const Gallery = () => {
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
               <div className="grid grid-cols-2 gap-2 w-full mb-3">
-                <img src="/assets/college ivent/img1.jpg" alt="Local College Event 1" className="object-cover rounded-lg border border-primary-200 shadow h-32 w-full" />
-                <img src="/assets/college ivent/img2.jpg" alt="Local College Event 2" className="object-cover rounded-lg border border-primary-200 shadow h-32 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/college ivent/img1.jpg`} alt="Local College Event 1" className="object-cover rounded-lg border border-primary-200 shadow h-32 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/college ivent/img2.jpg`} alt="Local College Event 2" className="object-cover rounded-lg border border-primary-200 shadow h-32 w-full" />
               </div>
               <div className="text-4xl mb-2">📸</div>
               <h3 className="text-lg font-bold text-primary-700 mb-1 text-center">Events with Local Colleges</h3>
@@ -90,8 +116,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/XSoftUs/img1.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/XSoftUs/img1.jpg`}
                 alt="2024 Self-Discovery and Leadership Bootcamp"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />
@@ -111,8 +137,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/kandakadu/img1.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/kandakadu/img1.jpg`}
                 alt="2017 IPSD Initiative at Kandakadu Senapura"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />
@@ -143,8 +169,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/malayasia/img1.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/malayasia/img1.jpg`}
                 alt="2013 Career Guidance Event at Victoria College, Malaysia"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />
@@ -165,11 +191,11 @@ const Gallery = () => {
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
               <div className="grid grid-cols-2 gap-2 w-full mb-3">
-                <img src="/assets/singapore/img1.jpg" alt="STEi Singapore 1" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/singapore/img2.jpg" alt="STEi Singapore 2" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/singapore/img3.jpg" alt="STEi Singapore 3" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/singapore/img4.jpg" alt="STEi Singapore 4" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
-                <img src="/assets/singapore/img5.jpg" alt="STEi Singapore 5" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full col-span-2" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/singapore/img1.jpg`} alt="STEi Singapore 1" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/singapore/img2.jpg`} alt="STEi Singapore 2" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/singapore/img3.jpg`} alt="STEi Singapore 3" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/singapore/img4.jpg`} alt="STEi Singapore 4" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full" />
+                <SafeImage src={`${process.env.PUBLIC_URL}/assets/singapore/img5.jpg`} alt="STEi Singapore 5" className="object-cover rounded-lg border border-primary-200 shadow h-20 w-full col-span-2" />
               </div>
               <div className="text-4xl mb-2">📸</div>
               <h3 className="text-lg font-bold text-primary-700 mb-1 text-center">2013 &mdash; Collaboration with STEi Institute, Singapore</h3>
@@ -187,8 +213,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/unirar.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/unirar.jpg`}
                 alt="2010 Career Guidance Program at Rajarata University"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />
@@ -218,8 +244,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/2004tsunami.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/2004tsunami.jpg`}
                 alt="2004 Tsunami Response - Hambantota, Sri Lanka"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />
@@ -249,8 +275,8 @@ const Gallery = () => {
               transition={{ duration: 0.5 }}
               className="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex flex-col items-center justify-center p-4"
             >
-              <img
-                src="/assets/2009event.jpg"
+              <SafeImage
+                src={`${process.env.PUBLIC_URL}/assets/2009event.jpg`}
                 alt="2009 IPSD Mission to Northern Province"
                 className="w-full h-40 object-cover rounded-lg mb-3 border border-primary-200 shadow"
               />

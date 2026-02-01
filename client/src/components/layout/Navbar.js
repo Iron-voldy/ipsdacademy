@@ -14,6 +14,7 @@ import {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logoError, setLogoError] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -38,6 +39,11 @@ const Navbar = () => {
   ];
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogoError = () => {
+    setLogoError(true);
+    console.log('Logo failed to load');
+  };
 
   return (
     <>
@@ -80,7 +86,18 @@ const Navbar = () => {
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3">
-              <img src="/assets/ipsd-logo.png" alt="IPSD Logo" className="w-14 h-14 object-contain" />
+              {!logoError ? (
+                <img 
+                  src="/assets/ipsd-logo.png" 
+                  alt="IPSD Logo" 
+                  className="w-14 h-14 object-contain" 
+                  onError={handleLogoError}
+                />
+              ) : (
+                <div className="w-14 h-14 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  IPSD
+                </div>
+              )}
               <div>
                 <h1 className="text-xl font-bold text-gray-900">IPSD</h1>
                 <p className="text-xs text-gray-600 leading-tight">Institute of Psychological Skill Development</p>

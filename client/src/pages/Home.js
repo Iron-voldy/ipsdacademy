@@ -4,21 +4,22 @@ import { Link } from 'react-router-dom';
 import { FaUsers, FaGraduationCap, FaAward } from 'react-icons/fa';
 
 const heroImages = [
-  '/assets/home/img1.jpg',
-  '/assets/home/img2.jpg',
-  '/assets/home/img3.jpg',
-  '/assets/home/img4.jpg',
-  '/assets/home/img5.jpg',
-  '/assets/home/img6.jpg',
-  '/assets/home/img7.jpg',
-  '/assets/home/img8.jpg',
-  '/assets/home/img9.jpg',
+  `${process.env.PUBLIC_URL}/assets/home/img1.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img2.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img3.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img4.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img5.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img6.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img7.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img8.jpg`,
+  `${process.env.PUBLIC_URL}/assets/home/img9.jpg`,
 ];
 
 const Home = () => {
   const [current, setCurrent] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,6 +41,11 @@ const Home = () => {
     if (distance < -50) prevSlide();
     setTouchStart(null);
     setTouchEnd(null);
+  };
+
+  // Handle image loading errors gracefully
+  const handleImageError = (imgSrc) => {
+    setImageErrors(prev => ({ ...prev, [imgSrc]: true }));
   };
 
   return (
@@ -90,8 +96,18 @@ const Home = () => {
                       alt={`IPSD Hero Slide ${idx + 1}`}
                       className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-700 ${idx === current ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                       style={{ pointerEvents: idx === current ? 'auto' : 'none' }}
+                      onError={() => handleImageError(img)}
                     />
                   ))}
+                  {/* Fallback content - only shown if all images fail to load */}
+                  {Object.keys(imageErrors).length === heroImages.length && Object.keys(imageErrors).length > 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary-500 to-secondary-500 z-20">
+                      <div className="text-center text-white">
+                        <h3 className="text-2xl font-bold mb-2">IPSD</h3>
+                        <p className="text-lg">Institute of Psychological Skill Development</p>
+                      </div>
+                    </div>
+                  )}
                   {/* Carousel Controls - hidden on mobile */}
                   <button
                     onClick={prevSlide}
